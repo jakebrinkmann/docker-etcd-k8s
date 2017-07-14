@@ -9,8 +9,27 @@ services:
       - "--bind-addr=0.0.0.0:4001"
       - "--data-dir=/var/etcd/data"
     ports:
-      - "127.0.0.1:4001:4001"
-
-#  kube-master:
-#  kube-minion:
+      - "4001"
+      - "2380"
+      - "7001"
+  kube-master:
+    image: gcr.io/google_containers/hyperkube:v1.0.7
+    entrypoint:
+      - "/hyperkube"
+      - "kubelet"
+      - "--api_servers=http://localhost:8080"
+      - "--v=2"
+      - "--address=0.0.0.0"
+      - "--enable_server"
+      - "--hostname_override=127.0.0.1"
+      - "--config=/etc/kubernetes/manifests"
+    ports:
+      - "8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - etcd
+  kube-minion:
+    image: 
+    privileged: true
 
