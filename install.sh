@@ -22,6 +22,9 @@ setenforce 0
 swapoff -a
 
 # Install K8s, as well as CLI utilities
+#   - kubelet: run commands on all machines
+#   - kubeadm: bootstrap a cluster
+#   - kubectl: talks to cluster
 yum install -y \
     kubelet \
     kubeadm \
